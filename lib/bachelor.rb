@@ -59,13 +59,10 @@ def get_occupation(data, hometown)
 end
 
 def get_average_age_for_season(data, season)
-  av_age = 0.0
-  cont_count = 0
-  # binding.pry
-  data[season].each do |att|
-    av_age += att["age"].to_i
-    cont_count += 1
-  end
-  aver = av_age/cont_count
-  aver.round
+  (data[season].map do |person|
+    person["age"]
+  end.reduce(0) do |sum, age|
+    # binding.pry
+    sum + age.to_f
+  end / data[season].length).round
 end
